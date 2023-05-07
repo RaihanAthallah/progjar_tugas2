@@ -16,12 +16,16 @@ class ProcessTheClient(threading.Thread):
             
             data = self.connection.recv(1024).decode('utf-8')
 
-            
-            if data.startswith('WAKTU SEKARANG') and data.endswith('\r\n'):
+            # Mengecek apakah pesan yang diterima dari client mengandung string 'WAKTU SEKARANG'
+            if data.startswith('JAM') and data.endswith('\r\n'):
+                # Kemudian atur timezone server ke Asia/Jakarta
                 indonesia_timezone = pytz.timezone('Asia/Jakarta')
+                # Dapatkan waktu server saat ini
                 indonesia_server_time = datetime.datetime.now(tz=indonesia_timezone)
+                # Ubah format waktu server menjadi HH:MM:SS
                 indonesia_time_str = indonesia_server_time.strftime('%H:%M:%S')
-                response = f'WAKTU SEKARANG {indonesia_time_str}\r\n'
+                # kirim waktu server ke client
+                response = f'JAM {indonesia_time_str}\r\n'
                 self.connection.send(response.encode('utf-8'))
             else:
                 break

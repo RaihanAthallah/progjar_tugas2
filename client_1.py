@@ -12,7 +12,7 @@ def kirim_data():
 
     try:
         # Send data
-        message = 'WAKTU SEKARANG\r\n'
+        message = 'JAM\r\n'
         logging.warning(f"[CLIENT] sending {message}")
         sock.sendall(message.encode('utf-8'))
         # Look for the response
